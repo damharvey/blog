@@ -57,6 +57,40 @@ namespace blogbackend.Repository
             }
         }
 
+        public IEnumerable<Patient> GetPaged(int pageNumber, int pageSize, string? filterFirst = null, string? filterLast = null, bool? filterActive = null, string? filterCity = null)
+        {
+            var query = _context.Patient.AsQueryable();
+
+            // Apply filters
+            if (!string.IsNullOrEmpty(filterFirst))
+            {
+                query = query.Where(p => p.FirstName != null && p.FirstName.Contains(filterFirst));
+
+            }
+
+            if (!string.IsNullOrEmpty(filterLast))
+            {
+                query = query.Where(p => p.LastName != null && p.LastName.Contains(filterLast));
+
+            }
+
+            if (filterActive.HasValue) // Check if the nullable bool has a value
+            {
+                bool activeValue = filterActive.Value; // Get the boolean value from the nullable bool
+                query = query.Where(p => p.Status == activeValue); // Compare with the boolean value
+            }
+
+            if (!string.IsNullOrEmpty(filterCity))
+            {
+                query = query.Where(p => p.City != null && p.City.Contains(filterCity));
+            }
+
+            // Apply pagination
+            var patients = query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+            return patients;
+        }
+
 
     }
 }
