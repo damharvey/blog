@@ -67,5 +67,43 @@ namespace blogbackend.Controllers
             return NoContent();
         }
 
+        [HttpGet("GetPaged")]
+        public ActionResult<IEnumerable<Patient>> GetPaged(
+        [FromQuery] int pageNumber,
+        [FromQuery] int pageSize,
+        [FromQuery] string? filterFirst,
+        [FromQuery] string? filterLast,
+        [FromQuery] bool? filterActive,
+        [FromQuery] string? filterCity,
+        [FromQuery] string sortBy = "Id")
+        {
+            // Apply filters
+            var patients = _repository.GetPaged(pageNumber, pageSize, filterFirst, filterLast, filterActive, filterCity);
+
+            // Apply sorting
+            switch (sortBy.ToLower())
+            {
+                case "first":
+                    patients = patients.OrderBy(p => p.FirstName, StringComparer.OrdinalIgnoreCase);
+                    break;
+                case "last":
+                    patients = patients.OrderBy(p => p.LastName, StringComparer.OrdinalIgnoreCase);
+                    break;
+                case "active":
+                    patients = patients.OrderBy(p => p.Status);
+                    break;
+                case "city":
+                    patients = patients.OrderBy(p => p.City, StringComparer.OrdinalIgnoreCase);
+                    break;
+                default:
+                    // Default sorting
+                    patients = patients.OrderBy(p => p.Id);
+                    break;
+            }
+
+            return Ok(patients.ToList());
+        }
+
+
     }
 }

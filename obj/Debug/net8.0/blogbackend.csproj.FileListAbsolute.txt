@@ -35,3 +35,4 @@ C:\Users\admin\Documents\Dam\Project\Hospital\blogbackend\obj\Debug\net8.0\refin
 C:\Users\admin\Documents\Dam\Project\Hospital\blogbackend\obj\Debug\net8.0\blogbackend.pdb
 C:\Users\admin\Documents\Dam\Project\Hospital\blogbackend\obj\Debug\net8.0\blogbackend.genruntimeconfig.cache
 C:\Users\admin\Documents\Dam\Project\Hospital\blogbackend\obj\Debug\net8.0\ref\blogbackend.dll
+C:\Users\admin\Documents\Dam\Project\Hospital\blogbackend\obj\Debug\net8.0\blogbackend.sourcelink.json
